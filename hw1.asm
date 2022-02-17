@@ -169,22 +169,22 @@ correctOSTI:
 		j argserrmsg                             # if not, error
 		onumber: 
 			addi $t7 $t8 -48                     # subtract 48 from char, results in a usable number
-			sb $t7 20($t6)                       # store the extracted decimal number into a separate place in memory.
+			sb $t7 200($t6)                      # store the extracted decimal number into a separate place in memory.
 			addi $s1 $s1 1                       # increment counter
 			addi $t6 $t6 1                       # increment memory counter
 			lbu $t8 0($s1)                       # update t8 to next character
 			j oloopsecond
 		oletter:
 			addi $t7 $t8 -55                     # subtract 55 from char, results in a usable decimal number
-			sb $t7 20($t6)                       # store the extracted decimal number into a separate place in memory.
+			sb $t7 200($t6)                      # store the extracted decimal number into a separate place in memory.
 			addi $s1 $s1 1                       # increment counter
 			addi $t6 $t6 1                       # increment memory counter
 			lbu $t8 0($s1)                       # update t8 to next character
 			j oloopsecond
 	oendloop:
 		li $s6 8                                 # constant 8, a counter for how many times to loop.
-		li $s2 0x100100c0                        # memory address for binary conversion.
-		li $s1 0x1001009a                        # jump to memory address where hex string is stored.
+		li $s2 0x100100e0                        # memory address for binary conversion.
+		li $s1 0x100100cc                        # jump to memory address where hex string is stored.
 	oendloop2:
 		beq $s6 $0 afterOSTI                     # when done with all 8 values terminate
 		lbu $t1 0($s1)                           # load 4-piece to be printed into t1
@@ -221,7 +221,7 @@ correctOSTI:
 		li $t2 1                                 # binary multiplier
 		li $t4 2                                 # constant 2
 		li $t5 1                                 # constant 1
-		li $s2 0x100100c0                        # memory address for binary conversion.
+		li $s2 0x100100e0                        # memory address for binary conversion.
 		li $t7 0x004f                            # Checks for each valid case.
 		beq $s1 $t7 OSTIO
 		li $t7 0x0053
