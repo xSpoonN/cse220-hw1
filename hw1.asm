@@ -127,7 +127,7 @@ correctOSTI:
 	lw $s1 arg2_addr                             # load second arg address
 	lhu $t8 0($s1)                               # load first half word into t8
 	li $s1 0x7830                                # 3078 = 48 120 = "0x"
-	bne $s1 $t8 argserrmsg                       # if the first 2 chars aren't 0x, terminate with error
+	bne $s1 $t8 invalidargmsg                       # if the first 2 chars aren't 0x, terminate with error
 	lw $s1 arg2_addr                             # load second arg address
 	addi $s1 $s1 2                               # increment counter
 	li $t1 0                                     # length counter
@@ -231,8 +231,9 @@ correctOSTI:
 		li $t7 0x0049
 		beq $s1 $t7 OSTII
 	OSTIO:
-		li $t1 5                                 # counter for first 6 bits.
+		li $t1 6                               # counter for first 6 bits.
 		add $s2 $s2 $t1                          # goes to end of section to be processed
+		addi $s2 $s2 -1
 		ostiloop:
 			beq $t1 $0 OSTIEND
 			lbu $s1 0($s2)                       # loads a bit into register
@@ -298,7 +299,7 @@ correctF:
 		li $t2 71
 		slt $t3 $t8 $t2                          # check if the char is less than 71 (F)
 		beq $t3 $t4 fletter                      # check if both conditions are true
-		j argserrmsg                             # if not, error
+		j invalidargmsg                             # if not, error
 		fnumber: 
 			addi $t7 $t8 -48                     # subtract 48 from char, results in a usable number
 			mult $t6 $t7                         # multiply by hex
@@ -399,7 +400,7 @@ correctL:
 		beq $s1 $s2 invalidhandmsg                # if length > 12, error
 		beq $t1 $s3 LM                           # if M
 		beq $t1 $s4 LP                           # if P
-		j invalidargmsg                          # if neither, error
+		j invalidhandmsg                          # if neither, error
 		LM:
 			addi $s6 $s6 1                       # increment merchant counter
 			addi $s1 $s1 1                       # increment length counter
