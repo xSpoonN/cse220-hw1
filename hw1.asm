@@ -141,9 +141,9 @@ correctOSTI:
 		j oloopo
 	oloopend: 
 		slt $t4 $t1 $s3                          # check if length is less than 1
-		beq $t4 $s3 argserrmsg                   # if its less than 1, error
+		beq $t4 $s3 invalidargmsg                   # if its less than 1, error
 		slt $t4 $s2 $t1                          # check if length is greater than 8
-		beq $t4 $s3 argserrmsg                   # if its greater than 8, error
+		beq $t4 $s3 invalidargmsg                   # if its greater than 8, error
 		lw $s1 arg2_addr                         # load second arg address
 		addi $s1 $s1 2                           # goes to hex start
 		lbu $t8 0($s1)                           # load char
@@ -247,11 +247,11 @@ correctOSTI:
 			addi $t1 $t1 -1                      # decrements remaining bits counter
 			j ostiloop
 	OSTIS:
-		li $t1 4                                 # counter for 7th to 11th bits.
+		li $t1 5                                 # counter for 7th to 11th bits.
 		addi $s2 $s2 10                          # goes to end of section to be processed
 		j ostiloop
 	OSTIT:
-		li $t1 4                                 # counter for 12th to 16th bits.
+		li $t1 5                                 # counter for 12th to 16th bits.
 		addi $s2 $s2 15                          # goes to end of section to be processed
 		j ostiloop
 	OSTII:
